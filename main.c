@@ -32,4 +32,48 @@ int main(){
 
 	printf("Tokens passed the test!");
 
+	// let five = 5;
+	// let ten = 10;
+	// let add = fn(x, y){ x + y };
+	// let result = add(five, ten);
+
+	const char* input2 = "let five = 5; let ten = 10; let add = fn(x, y){ x + y; }; let result = add(five, ten);";
+
+	TokenType expected2[] = {
+		TokenTypeLet,
+		TokenTypeIdent,
+		TokenTypeAssign,
+		TokenTypeInt, 
+		TokenTypeSemicolon,
+		TokenTypeLet,
+		TokenTypeIdent,
+		TokenTypeAssign,
+		TokenTypeInt, 
+		TokenTypeSemicolon,
+		TokenTypeLet,
+		TokenTypeIdent,
+		TokenTypeAssign,
+		TokenTypeFunction,
+		TokenTypeLParen,
+		TokenTypeIdent,
+		TokenTypeComma,
+		TokenTypeIdent,
+		TokenTypeRParen,
+		TokenTypeLBrace,
+		TokenTypeIdent,
+		TokenTypePlus,
+		TokenTypeIdent,
+		TokenTypeSemicolon,
+		TokenTypeLet,
+		TokenTypeIdent,
+		TokenTypeAssign,
+		TokenTypeIdent,
+		TokenTypeLParen,
+		TokenTypeIdent,
+		TokenTypeComma,
+		TokenTypeIdent,
+		TokenTypeRParen,
+		TokenTypeSemicolon,
+	};
+
 }
