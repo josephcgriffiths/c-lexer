@@ -11,7 +11,9 @@ void readChar(Lexer *l);
 
 
 bool isLetter(char ch);
+bool isDigit(char ch);
 const char* readIdentifier(Lexer* l, size_t *len);
+const char* readNumber(Lexer* l, size_t *len);
 TokenType LookupIdent(const char* ident, size_t len);
 void skipWhitespace(Lexer* l);
 
@@ -88,8 +90,15 @@ Token* nextToken(Lexer* l){
 		if(token==TokenTypeIdent){
 			literal = strndup(ident, len);
 		}
-		
-		tok = newToken(token, literal); 
+		tok = newToken(token, literal);
+		return tok;
+	} else if(isDigit(l->ch)){
+		size_t len = 0;
+		char* literal = NULL;
+		const char* digit = readNumber(l, &len);
+
+		literal = strndup(digit, len);
+		tok = newToken(TokenTypeInt, literal);
 		return tok;
 	}
 
@@ -123,10 +132,27 @@ const char* readIdentifier(Lexer* l, size_t *len){
 	return l->input + position;
 }
 
+const char* readNumber(Lexer* l, size_t *len){
+	size_t position = l->position;
+
+	while(isDigit(l->ch)){
+		readChar(l);
+	}
+
+	if(len){
+		*len = l->position - position;
+	}
+
+	return l->input + position;
+}
+
 bool isLetter(char ch){
 	return 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z' || ch == '_';
 }
 
+bool isDigit(char ch){
+	return '0' <= ch && ch <= '9'; 
+}
 
 TokenType LookupIdent(const char* ident, size_t len){
 	if(strncmp(ident, "let", len) == 0){
@@ -138,7 +164,8 @@ TokenType LookupIdent(const char* ident, size_t len){
 	return TokenTypeIdent;
 }
 
-void skipWhiteSpace(Lexer* l){
+
+void skipWhitespace(Lexer* l){
 	while(l->ch == ' ' || l->ch == '\t' || l->ch == '\n'){
 		readChar(l);
 	}

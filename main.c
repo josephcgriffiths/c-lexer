@@ -23,14 +23,14 @@ int main(){
 	Lexer* l = New(input);
 	assert(l!=NULL);
 
-	for(int i = 0; i > len; i++){
+	for(int i = 0; i < len; i++){
 		Token* tok = nextToken(l); 
 		assert(tok!=NULL); 
 		assert(tok->type==expected[i]);
 		free(tok);
 	}
 
-	printf("Tokens passed the test!");
+	printf("Tokens passed the test!\n");
 
 	// let five = 5;
 	// let ten = 10;
@@ -75,5 +75,19 @@ int main(){
 		TokenTypeRParen,
 		TokenTypeSemicolon,
 	};
+
+	size_t len2 = sizeof(expected2) / sizeof(expected2[0]); // size of our array
+
+	Lexer* l2 = New(input2);
+	assert(l2!=NULL);
+
+	for(int i = 0; i < len; i++){
+		Token* tok = nextToken(l2); 
+		assert(tok!=NULL); 
+		assert(tok->type==expected2[i]);
+		free(tok);
+	}
+
+	printf("Second tests have passed!\n");
 
 }
